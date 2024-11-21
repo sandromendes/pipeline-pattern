@@ -39,7 +39,7 @@ Neste exemplo, usamos o **Pipeline Pattern** para processar uma imagem, realizan
 await MediaPipelineBuilder<Media>
     .Create()
     .AddStep(new DownloadMediaStep(downloadService, tempFolder)) // Baixa a mídia
-    .AddStep(new RotateImageStep(90))                            // Rota a imagem
+    .AddStep(new RotateImageStep(90))                            // Rotaciona a imagem
     .AddStep(new AddMetadataStep("Author: Alice | Description: Sunset Landscape")) // Adiciona metadados
     .AddStep(new ApplyFilterStep())                              // Aplica filtro
     .AddStep(new SaveImageStep(tempFolder))                      // Salva no disco
