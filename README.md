@@ -71,7 +71,7 @@ Faz o upload da mídia processada para um serviço de armazenamento remoto.
 
 ---
 
-## 🛠️ **Como Executar o Projeto**
+## **Como Executar o Projeto**
 
 ### Pré-requisitos
 - [.NET 7.0+ SDK](https://dotnet.microsoft.com/download)
