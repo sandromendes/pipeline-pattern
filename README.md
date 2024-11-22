@@ -102,7 +102,3 @@ A classe principal que permite configurar e executar o pipeline.
 
 ### **2. IAsyncPipelineStep<T>**
 Interface que define a estrutura de um *step* no pipeline. Todos os passos implementam essa interface.
-
-## **Licença**
-
-Este projeto é licenciado sob a [MIT License](LICENSE).
