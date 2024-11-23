@@ -1,29 +1,27 @@
-﻿using PipelinePatternSample.Domain;
-using PipelinePatternSample.Pipelines.Interfaces;
+﻿using PipelinePatternSample.Pipelines.Interfaces;
 using PipelinePatternSample.Services;
+using PipelinePatternSample.UseCases.Contexts;
 
 namespace PipelinePatternSample.Pipelines
 {
-    public class DownloadMediaStep : IAsyncPipelineStep<Media>
+    public class DownloadMediaStep : IAsyncPipelineStep<ImageProcessingContext>
     {
-        private readonly CloudStorageService _cloudService;
-        private readonly string _tempFolder;
+        private readonly ICloudStorageService _cloudService;
 
-        public DownloadMediaStep(CloudStorageService cloudService, string tempFolder)
+        public DownloadMediaStep(ICloudStorageService cloudService)
         {
             _cloudService = cloudService;
-            _tempFolder = tempFolder;
         }
 
-        public async Task<Media> ProcessAsync(Media input)
+        public async Task<ImageProcessingContext> ProcessAsync(ImageProcessingContext input)
         {
-            Console.WriteLine($"Downloading media '{input.Name}' from cloud...");
+            Console.WriteLine($"Downloading media '{input.Image.Name}' from cloud...");
 
             await Task.Delay(500); // Simula o tempo de download
 
-            input.Path = await _cloudService.DownloadAsync(input.Name, _tempFolder);
+            input.Image.Path = await _cloudService.DownloadAsync(input.Image.Name, input.TempFolderPath);
 
-            Console.WriteLine($"Download complete: {input.Path}");
+            Console.WriteLine($"Download complete: {input.Image.Path}");
 
             return input;
         }

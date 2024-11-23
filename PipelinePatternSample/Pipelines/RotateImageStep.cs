@@ -1,21 +1,24 @@
-﻿using PipelinePatternSample.Domain;
-using PipelinePatternSample.Pipelines.Interfaces;
+﻿using PipelinePatternSample.Pipelines.Interfaces;
+using PipelinePatternSample.Services;
+using PipelinePatternSample.UseCases.Contexts;
 
 namespace PipelinePatternSample.Pipelines
 {
-    public class RotateImageStep : IAsyncPipelineStep<Media>
+    public class RotateImageStep : IAsyncPipelineStep<ImageProcessingContext>
     {
-        private readonly int _angle;
+        private readonly IImageProcessingService _imageProcessingService;
 
-        public RotateImageStep(int angle) => _angle = angle;
-
-        public async Task<Media> ProcessAsync(Media input)
+        public RotateImageStep(IImageProcessingService imageProcessingService)
         {
-            Console.WriteLine($"Rotating '{input.Name}' by {_angle} degrees...");
-           
-            await Task.Delay(200); // Simula o processamento
-            
-            Console.WriteLine($"Rotation complete for '{input.Name}'.");
+            _imageProcessingService = imageProcessingService;
+        }
+
+        public async Task<ImageProcessingContext> ProcessAsync(ImageProcessingContext input)
+        {
+            Console.WriteLine($"Rotating '{input.Image.Name}' by {input.RotationAngle} degrees...");
+
+            await _imageProcessingService.RotateImageAsync(input.Image, input.RotationAngle);
+            Console.WriteLine($"Rotation complete for '{input.Image.Name}'.");
             
             return input;
         }

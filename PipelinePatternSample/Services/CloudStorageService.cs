@@ -1,6 +1,6 @@
 ﻿namespace PipelinePatternSample.Services
 {
-    public class CloudStorageService : ICloudUploadService
+    public class CloudStorageService : ICloudStorageService
     {
         private readonly string _cloudFolder;
 
