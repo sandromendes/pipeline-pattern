@@ -1,21 +1,21 @@
-﻿using PipelinePatternSample.Domain;
-using PipelinePatternSample.Pipelines.Interfaces;
-using PipelinePatternSample.Services;
+﻿using PipelinePatternSample.Pipelines.Interfaces;
+using PipelinePatternSample.Services.Interfaces;
+using PipelinePatternSample.UseCases.Contexts;
 
 namespace PipelinePatternSample.Pipelines
 {
-    public class UploadMediaStep : IAsyncPipelineStep<Media>
+    public class UploadMediaStep : IAsyncPipelineStep<ImageProcessingContext>
     {
-        private readonly CloudStorageService _cloudService;
+        private readonly ICloudStorageService _cloudService;
 
-        public UploadMediaStep(CloudStorageService cloudService)
+        public UploadMediaStep(ICloudStorageService cloudService)
         {
             _cloudService = cloudService;
         }
 
-        public async Task<Media> ProcessAsync(Media input)
+        public async Task<ImageProcessingContext> ProcessAsync(ImageProcessingContext input)
         {
-            await _cloudService.UploadAsync(input.Path);
+            await _cloudService.UploadAsync(input.Image.Path);
 
             return input;
         }

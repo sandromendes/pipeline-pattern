@@ -1,18 +1,18 @@
 ﻿using PipelinePatternSample.Pipelines.Interfaces;
 
-namespace PipelinePatternSample.Core.Builders
+namespace PipelinePatternSample.Pipelines.Builders
 {
     public class MediaPipelineBuilder<T>
     {
         private readonly List<IAsyncPipelineStep<T>> _steps = new();
 
-        public static MediaPipelineBuilder<T> Create() => new MediaPipelineBuilder<T>();
+        public static MediaPipelineBuilder<T> Create() => new();
 
         public MediaPipelineBuilder<T> AddStep(IAsyncPipelineStep<T> step)
         {
             _steps.Add(step);
 
-            return this; 
+            return this;
         }
 
         public async Task<T> ProcessAsync(T input)

@@ -1,8 +1,7 @@
-﻿// See https://aka.ms/new-console-template for more information
-using PipelinePatternSample.Core.Builders;
-using PipelinePatternSample.Domain;
-using PipelinePatternSample.Pipelines;
+﻿using PipelinePatternSample.Domain;
 using PipelinePatternSample.Services;
+using PipelinePatternSample.UseCases;
+using PipelinePatternSample.UseCases.Requests;
 
 public class Program
 {
@@ -20,7 +19,9 @@ public class Program
         File.WriteAllText(cloudFilePath, "This is a simulated image file."); // Conteúdo fictício
 
         // Inicializando serviços
-        var downloadService = new CloudStorageService(cloudFolder);
+        var cloudStorageService = new CloudStorageService(cloudFolder);
+        var imageProcessingService = new ImageProcessingService();
+        var generativeAiService = new GenerativeAiRemasteringService();
 
         const string uri = "cloud://path/to/sunset.jpg";
 
@@ -30,32 +31,46 @@ public class Program
 
         // Pipeline 1: Download -> Rotação -> Upload
         Console.WriteLine("\nPipeline 1: Download -> Rotate -> Upload");
-        await MediaPipelineBuilder<Media>
-            .Create()
-            .AddStep(new DownloadMediaStep(downloadService, tempFolder))
-            .AddStep(new RotateImageStep(90))
-            .AddStep(new UploadMediaStep(downloadService))
-            .ProcessAsync(photo);
+
+        var rotateUseCase = new RotateCloudImageUseCase(cloudStorageService, imageProcessingService);
+
+        var rotateCloudImageRequest = new RotateCloudImageRequest
+        {
+            Angle = 90,
+            TempFolderPath = tempFolder,
+            CloudImagePath = cloudFilePath,
+            Image = photo
+        };
+
+        await rotateUseCase.ExecuteAsync(rotateCloudImageRequest);
 
         // Pipeline 2: Download -> Remasterização -> Upload
         Console.WriteLine("\nPipeline 2: Download -> Remaster -> Upload");
-        await MediaPipelineBuilder<Media>
-            .Create()
-            .AddStep(new DownloadMediaStep(downloadService, tempFolder))
-            .AddStep(new RemasterStep())
-            .AddStep(new UploadMediaStep(downloadService))
-            .ProcessAsync(photo);
 
-        // Pipeline 3: Download -> Rotação -> Adiciona Metadados -> Aplica filtros -> Salva imagem na máquina -> Upload
+        var remasterCloudImageUseCase = new RemasterCloudMediaUseCase(cloudStorageService, generativeAiService);
+
+        var remasterCloudImageRequest = new RemasterCloudImageRequest
+        {
+            CloudImagePath = cloudFilePath,
+            TempFolderPath = tempFolder,
+            Image = photo
+        };
+
+        await remasterCloudImageUseCase.ExecuteAsync(remasterCloudImageRequest);
+
+        // Pipeline 3: Download -> Aplica filtros -> Adiciona Metadados -> Salva imagem na máquina -> Upload
         Console.WriteLine("\nProcessing Image...");
-        await MediaPipelineBuilder<Media>
-            .Create()
-            .AddStep(new DownloadMediaStep(downloadService, tempFolder))
-            .AddStep(new RotateImageStep(90))
-            .AddStep(new AddMetadataStep("Author: Alice | Description: Sunset Landscape"))
-            .AddStep(new ApplyFilterStep())
-            .AddStep(new SaveImageStep(tempFolder))
-            .AddStep(new UploadMediaStep(downloadService))
-            .ProcessAsync(photo);
+
+        var applyFilterCloudImageUseCase = new ApplyFilterToCloudMediaUseCase(cloudStorageService);
+
+        var applyFilterCloudImageRequest = new ApplyFilterToCloudMediaRequest
+        {
+            Image = photo,
+            CloudImagePath = cloudFilePath,
+            TempFolderPath = tempFolder,
+            Metadata = metadata
+        };
+
+        await applyFilterCloudImageUseCase.ExecuteAsync(applyFilterCloudImageRequest);
     }
 }

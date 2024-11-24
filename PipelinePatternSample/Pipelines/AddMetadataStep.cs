@@ -1,22 +1,18 @@
-﻿using PipelinePatternSample.Domain;
-using PipelinePatternSample.Pipelines.Interfaces;
+﻿using PipelinePatternSample.Pipelines.Interfaces;
+using PipelinePatternSample.UseCases.Contexts;
 
 namespace PipelinePatternSample.Pipelines
 {
-    public class AddMetadataStep : IAsyncPipelineStep<Media>
+    public class AddMetadataStep : IAsyncPipelineStep<ImageProcessingContext>
     {
-        private readonly string _metadata;
-
-        public AddMetadataStep(string metadata) => _metadata = metadata;
-
-        public async Task<Media> ProcessAsync(Media input)
+        public async Task<ImageProcessingContext> ProcessAsync(ImageProcessingContext input)
         {
-            Console.WriteLine($"Adding metadata to '{input.Name}'...");
+            Console.WriteLine($"Adding metadata to '{input.Image.Name}'...");
 
             await Task.Delay(200); // Simula a operação
-            input.Metadata = _metadata;
+            input.Image.Metadata = input.Metadata;
             
-            Console.WriteLine($"Metadata added: {input.Metadata}");
+            Console.WriteLine($"Metadata added: {input.Image.Metadata}");
             
             return input;
         }

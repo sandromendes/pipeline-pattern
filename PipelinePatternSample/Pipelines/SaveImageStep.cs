@@ -1,23 +1,20 @@
-﻿using PipelinePatternSample.Domain;
-using PipelinePatternSample.Pipelines.Interfaces;
+﻿using PipelinePatternSample.Pipelines.Interfaces;
+using PipelinePatternSample.UseCases.Contexts;
 
 namespace PipelinePatternSample.Pipelines
 {
-    public class SaveImageStep : IAsyncPipelineStep<Media>
+    public class SaveImageStep : IAsyncPipelineStep<ImageProcessingContext>
     {
-        private readonly string _destinationFolder;
-
-        public SaveImageStep(string destinationFolder) => _destinationFolder = destinationFolder;
-
-        public async Task<Media> ProcessAsync(Media input)
+        public async Task<ImageProcessingContext> ProcessAsync(ImageProcessingContext input)
         {
-            Console.WriteLine($"Saving image '{input.Name}' to '{_destinationFolder}'...");
+            Console.WriteLine($"Saving image '{input.Image.Name}' to '{input.LocalImagePath}'...");
+            
             await Task.Delay(200); // Simula a operação
 
-            var savePath = $"{_destinationFolder}/{input.Name}.png";
-            input.Path = savePath;
+            var savePath = $"{input.LocalImagePath}/{input.Image.Name}";
+            input.Image.Path = savePath;
 
-            Console.WriteLine($"Image saved: {input.Path}");
+            Console.WriteLine($"Image saved: {input.Image.Path}");
             return input;
         }
     }
