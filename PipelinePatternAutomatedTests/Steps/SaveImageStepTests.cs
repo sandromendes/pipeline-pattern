@@ -13,7 +13,7 @@ namespace PipelinePatternAutomatedTests.Steps
             var step = new SaveImageStep();
             var context = new ImageProcessingContext
             {
-                Image = new Image("example", string.Empty, "Sample metadata"),
+                Image = new Image("example.png", string.Empty, "Sample metadata"),
                 LocalImagePath = "/local/temp"
             };
 
@@ -23,7 +23,7 @@ namespace PipelinePatternAutomatedTests.Steps
             // Assert
             Assert.NotNull(result);
             Assert.Equal("/local/temp/example.png", result.Image.Path);
-            Assert.Equal("example", result.Image.Name);
+            Assert.Equal("example.png", result.Image.Name);
         }
 
         [Fact]
@@ -33,7 +33,7 @@ namespace PipelinePatternAutomatedTests.Steps
             var step = new SaveImageStep();
             var context = new ImageProcessingContext
             {
-                Image = new Image("example", string.Empty, "Sample metadata"),
+                Image = new Image("example.png", string.Empty, "Sample metadata"),
                 LocalImagePath = string.Empty // Caminho local vazio
             };
 

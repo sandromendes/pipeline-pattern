@@ -2,8 +2,6 @@
 using PipelinePatternSample.UseCases.Requests;
 using PipelinePatternSample.UseCases;
 using PipelinePatternSample.Domain;
-using PipelinePatternSample.Pipelines;
-using PipelinePatternSample.UseCases.Contexts;
 using PipelinePatternSample.Services.Interfaces;
 
 namespace PipelinePatternAutomatedTests.UseCases
@@ -40,7 +38,7 @@ namespace PipelinePatternAutomatedTests.UseCases
 
             // Assert
             Assert.True(result.Success);
-            Assert.Equal("cloud/path/image.jpg", result.FilteredCloudImagePath);
+            Assert.Equal("cloud/path/image_edited.jpg", result.FilteredCloudImagePath);
         }
 
         [Fact]

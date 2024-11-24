@@ -24,7 +24,6 @@ namespace PipelinePatternSample.Pipelines
                 input.Image = remasteredImage;
                 input.CloudImagePath = AddRemasteredSuffix(input.CloudImagePath);
 
-
                 Console.WriteLine($"Remastering completed for media '{input.Image.Name}'.");
             }
             catch (Exception ex)
