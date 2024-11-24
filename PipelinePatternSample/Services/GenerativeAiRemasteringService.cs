@@ -1,4 +1,5 @@
 ﻿using PipelinePatternSample.Domain;
+using PipelinePatternSample.Services.Interfaces;
 
 namespace PipelinePatternSample.Services
 {

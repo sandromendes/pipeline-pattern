@@ -1,4 +1,6 @@
-﻿namespace PipelinePatternSample.Services
+﻿using PipelinePatternSample.Services.Interfaces;
+
+namespace PipelinePatternSample.Services
 {
     public class CloudStorageService : ICloudStorageService
     {

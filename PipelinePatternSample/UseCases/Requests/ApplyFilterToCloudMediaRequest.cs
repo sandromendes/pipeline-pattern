@@ -7,7 +7,7 @@ namespace PipelinePatternSample.UseCases.Requests
         public string CloudImagePath { get; set; }
         public string TempFolderPath { get; set; }
         public Image Image { get; set; }
-        public string Metadata { get; internal set; }
+        public string Metadata { get; set; }
     }
 
 }

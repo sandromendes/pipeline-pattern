@@ -1,5 +1,5 @@
 ﻿using PipelinePatternSample.Pipelines.Interfaces;
-using PipelinePatternSample.Services;
+using PipelinePatternSample.Services.Interfaces;
 using PipelinePatternSample.UseCases.Contexts;
 
 namespace PipelinePatternSample.Pipelines
@@ -19,21 +19,32 @@ namespace PipelinePatternSample.Pipelines
 
             try
             {
-                // Chamada para o serviço de IA para remasterizar a imagem
                 var remasteredImage = await _aiRemasteringService.RemasterImageAsync(input.Image);
 
-                // Atualiza o contexto com a imagem remasterizada
                 input.Image = remasteredImage;
+                input.CloudImagePath = AddRemasteredSuffix(input.CloudImagePath);
+
 
                 Console.WriteLine($"Remastering completed for media '{input.Image.Name}'.");
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Failed to remaster media '{input.Image.Name}': {ex.Message}");
-                throw; // Propaga a exceção para ser tratada no pipeline
+                throw; 
             }
 
             return input;
+        }
+
+        private static string AddRemasteredSuffix(string cloudImagePath)
+        {
+            var extension = Path.GetExtension(cloudImagePath);
+            var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(cloudImagePath);
+            var directory = Path.GetDirectoryName(cloudImagePath);
+
+            directory = directory?.Replace("\\", "/");
+
+            return Path.Combine(directory, $"{fileNameWithoutExtension}_remastered{extension}");
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using PipelinePatternSample.Pipelines.Interfaces;
-using PipelinePatternSample.Services;
+using PipelinePatternSample.Services.Interfaces;
 using PipelinePatternSample.UseCases.Contexts;
 
 namespace PipelinePatternSample.Pipelines

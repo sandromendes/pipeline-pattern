@@ -1,5 +1,5 @@
 ﻿using PipelinePatternSample.Pipelines.Interfaces;
-using PipelinePatternSample.Services;
+using PipelinePatternSample.Services.Interfaces;
 using PipelinePatternSample.UseCases.Contexts;
 
 namespace PipelinePatternSample.Pipelines
@@ -17,10 +17,23 @@ namespace PipelinePatternSample.Pipelines
         {
             Console.WriteLine($"Rotating '{input.Image.Name}' by {input.RotationAngle} degrees...");
 
-            await _imageProcessingService.RotateImageAsync(input.Image, input.RotationAngle);
+            input.Image = await _imageProcessingService.RotateImageAsync(input.Image, input.RotationAngle);
+            input.CloudImagePath = AddRotatedSuffix(input.CloudImagePath);
+
             Console.WriteLine($"Rotation complete for '{input.Image.Name}'.");
             
             return input;
+        }
+
+        private static string AddRotatedSuffix(string cloudImagePath)
+        {
+            var extension = Path.GetExtension(cloudImagePath);
+            var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(cloudImagePath);
+            var directory = Path.GetDirectoryName(cloudImagePath);
+
+            directory = directory?.Replace("\\", "/");
+
+            return Path.Combine(directory, $"{fileNameWithoutExtension}_rotated{extension}");
         }
     }
 

@@ -1,4 +1,4 @@
-﻿namespace PipelinePatternSample.UseCases
+﻿namespace PipelinePatternSample.UseCases.Interfaces
 {
     public interface IUseCase<TRequest, TResponse>
     {

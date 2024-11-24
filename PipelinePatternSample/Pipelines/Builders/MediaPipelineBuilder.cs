@@ -1,6 +1,6 @@
 ﻿using PipelinePatternSample.Pipelines.Interfaces;
 
-namespace PipelinePatternSample.Core.Builders
+namespace PipelinePatternSample.Pipelines.Builders
 {
     public class MediaPipelineBuilder<T>
     {
@@ -12,7 +12,7 @@ namespace PipelinePatternSample.Core.Builders
         {
             _steps.Add(step);
 
-            return this; 
+            return this;
         }
 
         public async Task<T> ProcessAsync(T input)

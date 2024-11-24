@@ -1,7 +1,8 @@
-﻿using PipelinePatternSample.Core.Builders;
-using PipelinePatternSample.Pipelines;
-using PipelinePatternSample.Services;
+﻿using PipelinePatternSample.Pipelines;
+using PipelinePatternSample.Pipelines.Builders;
+using PipelinePatternSample.Services.Interfaces;
 using PipelinePatternSample.UseCases.Contexts;
+using PipelinePatternSample.UseCases.Interfaces;
 using PipelinePatternSample.UseCases.Requests;
 using PipelinePatternSample.UseCases.Responses;
 
@@ -40,7 +41,7 @@ namespace PipelinePatternSample.UseCases
                 return new ApplyFilterToCloudMediaResponse
                 {
                     Success = true,
-                    FilteredCloudImagePath = context.CloudPath
+                    FilteredCloudImagePath = context.CloudImagePath
                 };
             }
             catch (Exception ex)

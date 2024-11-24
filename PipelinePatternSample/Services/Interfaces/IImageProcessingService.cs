@@ -1,6 +1,6 @@
 ﻿using PipelinePatternSample.Domain;
 
-namespace PipelinePatternSample.Services
+namespace PipelinePatternSample.Services.Interfaces
 {
     public interface IImageProcessingService
     {

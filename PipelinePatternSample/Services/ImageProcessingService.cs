@@ -1,4 +1,5 @@
 ﻿using PipelinePatternSample.Domain;
+using PipelinePatternSample.Services.Interfaces;
 
 namespace PipelinePatternSample.Services
 {
@@ -8,8 +9,10 @@ namespace PipelinePatternSample.Services
         {
             Console.WriteLine($"Rotating image '{image}' by {angle} degrees...");
 
-
             await Task.Delay(500); // Simula o processamento
+
+            image.AppendSuffixToPath("_rotated");
+
             Console.WriteLine($"Image rotated and saved to: {image.Path}");
 
             return image;
