@@ -138,8 +138,8 @@ public class RemasterCloudMediaUseCase : IUseCase<RemasterCloudImageRequest, Rem
 ### Passos
 1. Clone o repositório:
    ```bash
-   git clone [https://github.com/usuario/media-pipeline.git](https://github.com/sandromendes/pipeline-pattern.git)
-   cd pipeline-pattern
+   git clone https://github.com/sandromendes/pipeline-pattern-usecase.git
+   cd pipeline-pattern-usecase
    ```
 
 2. Restaure as dependências:
