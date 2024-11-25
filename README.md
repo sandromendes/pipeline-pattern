@@ -90,8 +90,7 @@ public class RemasterCloudMediaUseCase : IUseCase<RemasterCloudImageRequest, Rem
             .Build(); // Finaliza a construção do pipeline.
     }
 
-    // Este método executa o Use Case. Segue o padrão de design Template Method,
-    // pois a sequência de operações do pipeline é fixa e definida no construtor.
+    // Este método executa o Use Case.
     public async Task<RemasterCloudMediaResponse> ExecuteAsync(RemasterCloudImageRequest request)
     {
         // Criação do contexto inicial para o pipeline.
